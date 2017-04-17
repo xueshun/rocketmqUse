@@ -21,7 +21,8 @@ public class Consumer {
 		consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
 		
 		/**
-		 * 
+		 * 设置Consumer第一次启动是从队列头部开始消费还是从队列尾部开始消费
+		 * 如果非第一次启动，那么按照上一次消费的位置继续消费
 		 */
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 		
