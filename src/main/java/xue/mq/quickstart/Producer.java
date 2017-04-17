@@ -6,14 +6,13 @@ import com.alibaba.rocketmq.client.producer.SendResult;
 import com.alibaba.rocketmq.common.message.Message;
 
 /**
- * Producer 发送消息
+ *
  * @author Administrator
  *
  */
 public class Producer {
 	public static void main(String[] args) throws MQClientException, InterruptedException {
 		DefaultMQProducer producer = new DefaultMQProducer("quickstart_producer");
-		//连接地址
 		producer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
 		producer.start();
 		
