@@ -15,13 +15,18 @@ public class Consumer02 {
 			String group_name = "message_consumer";
 			
 			DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(group_name);
-			consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+			
+			//多master模式
+			//consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+			
+			//多master 多slave模式
+			consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876;192.168.1.222:9876;192.168.1.223:9876");
 			
 			//订阅Topic01 主题 并且过滤 Tag01 Tag02 Tag03
 			consumer.subscribe("Topic01", "Tag01 || Tag02 || Tag03");
 			
 			//广播模式下需要先启动Consumer 【默认的为集群消费】
-			consumer.setMessageModel(MessageModel.BROADCASTING);
+			//consumer.setMessageModel(MessageModel.BROADCASTING);
 			consumer.registerMessageListener(new Listener());
 			consumer.start();
 		} catch (Exception e) {

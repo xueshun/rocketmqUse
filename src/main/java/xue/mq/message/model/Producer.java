@@ -17,7 +17,11 @@ public class Producer {
 		
 		DefaultMQProducer producer = new DefaultMQProducer(group_name);
 		
-		producer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+		//多master
+		//producer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+		
+		//多master 多slave
+		producer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876;192.168.1.222:9876;192.168.1.223:9876");
 		producer.start();
 		
 		//测试发送一条数据

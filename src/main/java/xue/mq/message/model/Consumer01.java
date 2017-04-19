@@ -29,10 +29,17 @@ public class Consumer01 {
 			String group_name = "message_consumer";
 
 			DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(group_name);
-			consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+			
+			//多master模式
+			//consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876");
+			
+			//多master 多slave模式
+			consumer.setNamesrvAddr("192.168.1.220:9876;192.168.1.221:9876;192.168.1.222:9876;192.168.1.223:9876");
 
 			//订阅Topic01 主题 并且过滤 Tag01 Tag02 Tag03
 			consumer.subscribe("Topic01", "Tag01 || Tag02 || Tag03");
+			
+			
 			
 			//广播模式下需要先启动Consumer 【默认的为集群消费】
 			/**
@@ -40,7 +47,7 @@ public class Consumer01 {
 			 * 		广播消费 ： 生产数据 所有的 消费端 消费相同的生产端生产的数据 (一个生产端生产100条消息，两个消费端，每个消费端会处理100条数据)
 			 * 		集群消费 ： 生产端生产的数据 由消费端一起消费例如:(生产端生产100条消息，两个消费端会每个处理50条) 
 			 */
-			consumer.setMessageModel(MessageModel.BROADCASTING);
+			//consumer.setMessageModel(MessageModel.BROADCASTING);
 			consumer.registerMessageListener(new Listener());
 
 			/* 权重策略
