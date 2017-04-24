@@ -27,6 +27,11 @@ public class Consumer2 {
 		 * 设置Consumer第一次启动是从队列头部开始消费还是从尾部开始消费
 		 * 如果非第一次启动，那么按照上次消费的位置继续消费
 		 */
+		
+		//消费线程池最小数量 默认为10
+		consumer.setConsumeThreadMin(10);
+		//消费线程池最大数量 默认为20
+		consumer.setConsumeThreadMax(20);
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 		
 		//订阅的主题
@@ -39,6 +44,8 @@ public class Consumer2 {
 		System.out.println("C2 start ....");
 	}
 	
+	//MessageListenerOrderly 让该线程去接收同一个队列的的消息，不会接收其他队列的消息
+	//在类里面不允许写任何多线程的处理逻辑 原子性
 	class Listener implements MessageListenerOrderly{
 		private Random random = new Random();
 		public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
@@ -49,7 +56,8 @@ public class Consumer2 {
 				System.out.println(msg +", content: " + new String(msg.getBody()));
 			}
 			try {
-				//模拟业务逻辑处理中...
+				//模拟业务逻辑处理中... 单线程处理
+				//如果为多线程消费，其他线程要等待该线程处理完毕
 				TimeUnit.SECONDS.sleep(random.nextInt(5));
 			} catch (Exception e) {
 				e.printStackTrace();
