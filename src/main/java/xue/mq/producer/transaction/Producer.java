@@ -78,7 +78,6 @@ public class Producer {
 		 */
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-			
 			public void run() {
 				producer.shutdown();
 			}
